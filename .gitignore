@@ -1,0 +1,13 @@
+*
+!*/
+
+!*.cpp
+!.gitignore
+!*.hpp
+!*.py
+!*.md
+!*.txt
+
+# 4. Explicitly re-ignore specific common junk inside allowed folders
+**/__pycache__/
+**/.DS_Store
