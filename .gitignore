@@ -3,7 +3,7 @@
 
 !*.cpp
 !.gitignore
-!*.hpp
+!*.h
 !*.py
 !*.md
 !*.txt
