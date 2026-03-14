@@ -2,8 +2,8 @@
 #define MCSIM_H
 #include <vector>
 #include <random>
-#include "agent.h"
-#include "lattice.h"
+#include "../include/agent.h"
+#include "../include/lattice.h"
 
 class MCsim {
 private:

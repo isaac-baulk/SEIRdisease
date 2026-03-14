@@ -2,11 +2,10 @@
 #define LATTICE_H
 
 #include <vector>
-#include "agent.h"
+#include "../include/agent.h"
 
 class Lattice {
     public:
-        Lattice(); //default constructor with no parameters
         Lattice(int width, int height);
         bool placeAgent(Agent* agent, int x, int y); //need to count agents in population when placing
         std::vector<Agent*> getNeighbors(int x, int y) const;

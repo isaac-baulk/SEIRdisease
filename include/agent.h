@@ -5,20 +5,20 @@ enum class InfectionState { SUSCEPTIBLE, EXPOSED, INFECTIOUS, RECOVERED };
 
 class Agent {
     private:
-        int id;
+        int id_;
         InfectionState current_state; 
-        double x;
-        double y;
+        int x;
+        int y;
         int steps_in_state;
 
     public:
         //init
-        Agent(int id, double start_x, double start_y);
+        Agent(int id, int start_x, int start_y);
 
         //getters
         InfectionState getState() const;
-        double getX() const;
-        double getY() const;
+        int getX() const;
+        int getY() const;
         int getStepsInState() const;
         
         //behaviours
