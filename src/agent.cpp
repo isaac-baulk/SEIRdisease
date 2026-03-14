@@ -1,14 +1,10 @@
 #include "../include/agent.h"
 
-// Constructor implementation
-Agent::Agent(int id, int start_x, int start_y) {
-    id_ = id;
+Agent::Agent(int id, int start_x, int start_y) : id_(id), x(start_x), y(start_y){
     current_state = InfectionState::SUSCEPTIBLE;
-    x = start_x;
-    y = start_y;
 }
 
-// Getter implementation
+///getters
 InfectionState Agent::getState() const {
     return current_state;
 }
@@ -21,7 +17,7 @@ int Agent::getY() const {
     return y;
 }
 
-// Behavior implementation
+//behaviours
 void Agent::expose() {
     if (current_state == InfectionState::SUSCEPTIBLE) {
         current_state = InfectionState::EXPOSED;

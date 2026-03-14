@@ -1,7 +1,7 @@
 #ifndef AGENT_H
 #define AGENT_H
 
-enum class InfectionState { SUSCEPTIBLE, EXPOSED, INFECTIOUS, RECOVERED };
+enum class InfectionState {SUSCEPTIBLE, EXPOSED, INFECTIOUS, RECOVERED};
 
 class Agent {
     private:

@@ -3,9 +3,7 @@
 #include <vector>
 
 //constructor
-Lattice::Lattice(int width, int height) {
-    width_ = width;
-    height_ = height;
+Lattice::Lattice(int width, int height): width_(width), height_(height){
     grid.resize(width * height, nullptr);
 }
 
@@ -14,18 +12,24 @@ int Lattice::getIndex(int x, int y) const {
     return (y * width_) + x;
 }
 
+//should implement this helper in moveAgent later
+bool Lattice::isOccupied(int x, int y) const {
+    return grid[getIndex(x, y)] != nullptr;
+}
+
+int Lattice::getWidth() {
+    return width_;
+}
+
+int Lattice::getHeight() {
+    return height_;
+}
+
 //initially place agents
-bool Lattice::placeAgent(Agent* agent, int x, int y) { //should merge with moveAgent
+void Lattice::placeAgent(Agent* agent, int x, int y) { //should merge with moveAgent
     int index = getIndex(x, y);
-    if (grid[index] == nullptr) {
-        
-        grid[index] = agent;   
-        agent->move(x, y);
-        
-        return true;
-    }
-    
-    return false; 
+    grid[index] = agent;   
+    agent->move(x, y);
 }
 
 //move agents
