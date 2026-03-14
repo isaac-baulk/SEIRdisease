@@ -25,7 +25,7 @@ class Agent {
         void expose();
         void infect();
         void recover();
-        void randomWalk(double max_x, double max_y);
+        void move(int newx, int newy);
         void incrementStep();
 };
 

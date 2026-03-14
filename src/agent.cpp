@@ -10,13 +10,6 @@ InfectionState Agent::getState() const {
     return current_state;
 }
 
-// Behavior implementation
-void Agent::expose() {
-    if (current_state == InfectionState::SUSCEPTIBLE) {
-        current_state = InfectionState::EXPOSED;
-    }
-}
-
 double Agent::getX() const {
     return x;
 }
@@ -25,8 +18,25 @@ double Agent::getY() const {
     return y;
 }
 
-void Agent::randomWalk(double max_x, double max_y) {
+// Behavior implementation
+void Agent::expose() {
+    if (current_state == InfectionState::SUSCEPTIBLE) {
+        current_state = InfectionState::EXPOSED;
+    }
+}
 
+void Agent::infect() {
+
+}
+
+void Agent::recover() {
+
+}
+
+//setters 
+void Agent::move(int newx, int newy) {
+    x = newx;
+    y = newy;
 }
 
 void Agent::incrementStep() {
