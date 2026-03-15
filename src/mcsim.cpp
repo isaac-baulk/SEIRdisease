@@ -1,4 +1,5 @@
-#include "mcsim.h"
+#include "../include/mcsim.h"
+#include <iostream>
 
 MCsim::MCsim(int grid_w, int grid_h, double b, double s, double g)
     : lattice(grid_w, grid_h), beta(b), sigma(s), gamma(g), rng(std::random_device{}())
@@ -139,4 +140,27 @@ std::vector<int> MCsim::getHistoryI() const {
 
 std::vector<int> MCsim::getHistoryR() const {
     return history_R;
+}
+
+//output
+void MCsim::printHistory() const {
+    std::cout << "Step\tS\tE\tI\tR\n";
+    std::cout << "------------------------------------\n";
+
+    for (size_t i = 0; i < history_S.size(); i += 5) {
+        std::cout << i << "\t"
+                  << history_S[i] << "\t"
+                  << history_E[i] << "\t"
+                  << history_I[i] << "\t"
+                  << history_R[i] << "\n";
+    }
+
+    size_t last_step = history_S.size() - 1;
+    if (last_step % 5 != 0) {
+        std::cout << last_step << "\t"
+                  << history_S[last_step] << "\t"
+                  << history_E[last_step] << "\t"
+                  << history_I[last_step] << "\t"
+                  << history_R[last_step] << "\n";
+    }
 }
