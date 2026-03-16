@@ -142,6 +142,23 @@ std::vector<int> MCsim::getHistoryR() const {
     return history_R;
 }
 
+std::vector<std::vector<int>> MCsim::getAgentCoordinates() const {
+    
+    std::vector<std::vector<int>> agent_data;
+    agent_data.reserve(population.size()); 
+
+    for (const auto& agent : population) {
+        
+        // Cast the enum class to a standard integer so Python can read it
+        int state_int = static_cast<int>(agent.getState());
+        
+        // Package the agent's data into a small vector and add it to our main list
+        agent_data.push_back({agent.getX(), agent.getY(), state_int});
+    }
+
+    return agent_data;
+}
+
 //output
 void MCsim::printHistory() const {
     std::cout << "Step\tS\tE\tI\tR\n";

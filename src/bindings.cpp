@@ -22,5 +22,7 @@ PYBIND11_MODULE(seir_sim, m) {
         .def("getHistoryS", &MCsim::getHistoryS)
         .def("getHistoryE", &MCsim::getHistoryE)
         .def("getHistoryI", &MCsim::getHistoryI)
-        .def("getHistoryR", &MCsim::getHistoryR);
+        .def("getHistoryR", &MCsim::getHistoryR)
+
+        .def("getAgentCoordinates", &MCsim::getAgentCoordinates);
 }
