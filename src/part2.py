@@ -56,6 +56,6 @@ def track_agents(grid_size):
 
 grid_size = 100
 sim = seir_sim.MCsim(grid_size, grid_size, 1, 0.1, 0.005)
-sim.populate_agents(0.95, 0.05, 100)
+sim.populate_agents(0.95, 0.05, 2000)
 
 track_agents(grid_size)

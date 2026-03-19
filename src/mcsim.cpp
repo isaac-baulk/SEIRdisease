@@ -149,10 +149,10 @@ std::vector<std::vector<int>> MCsim::getAgentCoordinates() const {
 
     for (const auto& agent : population) {
         
-        // Cast the enum class to a standard integer so Python can read it
+        //make enum class a normal integer
         int state_int = static_cast<int>(agent.getState());
         
-        // Package the agent's data into a small vector and add it to our main list
+        //make agent data into a vector
         agent_data.push_back({agent.getX(), agent.getY(), state_int});
     }
 
