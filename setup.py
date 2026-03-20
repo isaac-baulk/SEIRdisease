@@ -3,8 +3,15 @@ from pybind11.setup_helpers import Pybind11Extension, build_ext
 
 ext_modules = [
     Pybind11Extension(
-        "seir_sim",
-        ["bindings.cpp", "agent.cpp", "lattice.cpp", "MCsim.cpp"],
+        "seir_sim",      
+        [
+            "bindings/bindings.cpp", 
+            "src/Agent.cpp", 
+            "src/Lattice.cpp", 
+            "src/mcsim.cpp"
+        ],
+
+        include_dirs=["include"],
         cxx_std=17,
     ),
 ]

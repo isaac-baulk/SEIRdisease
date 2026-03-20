@@ -50,7 +50,7 @@ void MCsim::populate_agents(double p_sus, double p_exp, int pop_size) {
         do {
             random_x = dist_x(rng);
             random_y = dist_y(rng);
-        } while (lattice.isOccupied(random_x, random_y)); // Keep rolling if occupied!
+        } while (lattice.isOccupied(random_x, random_y)); //keep going if cell is occupied
 
         //make agent
         Agent new_agent(i, random_x, random_y);

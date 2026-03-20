@@ -1,5 +1,8 @@
 *
-!*/
+!include/
+!src/
+!scripts/
+!bindings/
 
 !*.cpp
 !.gitignore
@@ -8,6 +11,5 @@
 !*.md
 !*.txt
 
-# 4. Explicitly re-ignore specific common junk inside allowed folders
 **/__pycache__/
 **/.DS_Store
