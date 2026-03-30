@@ -1,37 +1,55 @@
 import matplotlib.pyplot as plt
 import seir_sim
-from scripts.ODE_model import odeSEIR
+from ODE_model import odeSEIR
 
-# sim parameters
-N = 5000
-beta = 0.5
-sigma = 0.2
+# sim parameters --------------------------------------------------------------------------------------
+N = 30
+beta = 0.15
+sigma = 1
 gamma = 0.1
-days = 150
+days = 30
+
+prop_exposed = 0.1
+prop_susceptible = 1.0 - prop_exposed
+
+#convert parameters from ODE model to suitable equivalents for mcsim model
+steps_per_day = 20
 grid_size = 100
-initial_exposed = 10
 
-# MONTE CARLO METHOD
-mc_sim = seir_sim.MCsim(grid_size, grid_size, beta, sigma, gamma)
-mc_sim.populate_agents(0.998, 0.002, N)
+p_gamma = gamma / steps_per_day #convert gamma to a probability for mcsim
+p_sigma = sigma / steps_per_day #convert sigma to a probability for mcsim
 
-for _ in range(days):
+pop_density = N/(grid_size*grid_size)
+k = 8 * pop_density #avg number of nearest neighbours is 8 neighbours * population density
+beta_mc = beta / (k*steps_per_day) #beta accounts for number of contacts that agents make per day
+
+# MONTE CARLO METHOD --------------------------------------------------------------------------------------
+mc_sim = seir_sim.MCsim(grid_size, grid_size, beta_mc, p_sigma, p_gamma)
+mc_sim.populate_agents(prop_susceptible, prop_exposed, N)
+
+num_steps = steps_per_day * days
+for _ in range(num_steps):
     mc_sim.step()
 
-# ODE METHOD
-ode_sim = odeSEIR(N, beta, sigma, gamma)
-ode_sim.solve(days, E0=initial_exposed, I0=0)
+# ODE METHOD --------------------------------------------------------------------------------------
+initial_exposed = prop_exposed * N
 
-# PLOT AND COMPARE
+ode_sim = odeSEIR(N, beta, sigma, gamma)
+ode_sim.solve(days, E0=initial_exposed, I0=1)
+
+# PLOT AND COMPARE --------------------------------------------------------------------------------------
+R_factor = beta / gamma
+print(f'R factor for this epidemic: {R_factor}')
+
 plt.figure(figsize=(10, 6))
 
-# MONTE CARLO
-plt.plot(mc_sim.getHistoryS(), 'b--', alpha=0.5, label=' MC susceptible')
-plt.plot(mc_sim.getHistoryE(), 'orange', linestyle='--', alpha=0.5, label='MC exposed')
-plt.plot(mc_sim.getHistoryI(), 'r--', alpha=0.5, label='MC infectious')
-plt.plot(mc_sim.getHistoryR(), 'g--', alpha=0.5, label='MC recovered')
+# MONTE CARLO - slicing data so that only ODE relevant steps are plotted -------------------------------------------
+plt.plot(mc_sim.getHistoryS()[::steps_per_day], 'b--', alpha=0.5, label=' MC susceptible')
+plt.plot(mc_sim.getHistoryE()[::steps_per_day], 'orange', linestyle='--', alpha=0.5, label='MC exposed')
+plt.plot(mc_sim.getHistoryI()[::steps_per_day], 'r--', alpha=0.5, label='MC infectious')
+plt.plot(mc_sim.getHistoryR()[::steps_per_day], 'g--', alpha=0.5, label='MC recovered')
 
-# ODE
+# ODE --------------------------------------------------------------------------------------
 plt.plot(ode_sim.t, ode_sim.S, 'b-', linewidth=2, label='ODE susceptible')
 plt.plot(ode_sim.t, ode_sim.E, color='darkorange', linewidth=2, label='ODE exposed')
 plt.plot(ode_sim.t, ode_sim.I, 'r-', linewidth=2, label='ODE infectious')

@@ -4,7 +4,7 @@ import matplotlib.animation as animation
 import numpy as np
 
 def plot_populations(): 
-    for _ in range(2000): #run simulation steps
+    for _ in range(100): #run simulation steps
         sim.step()
         data = sim.getAgentCoordinates()
 
@@ -55,8 +55,11 @@ def track_agents(grid_size):
 
 
 grid_size = 100
-sim = seir_sim.MCsim(grid_size, grid_size, 1, 0.1, 0.005)
-sim.populate_agents(0.95, 0.05, 2000)
+sim = seir_sim.MCsim(grid_size, grid_size, 1, 1, 0.1)
+sim.populate_agents(0.95, 0.05, 30)
 
 #create animation to track agents around the grid
 track_agents(grid_size)
+
+#uncomment to plot poulation sizes
+plot_populations()
