@@ -17,8 +17,8 @@ class Lattice {
         int getHeight();
         
     private:
-        double width_;
-        double height_;
+        int width_;
+        int height_;
         int getIndex(int x, int y) const; //helper function to get index for 2d array
         std::vector<Agent*> grid; //use pointers not actual agents
 };

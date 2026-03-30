@@ -40,7 +40,7 @@ bool Lattice::moveAgent(Agent* agent, int old_x, int old_y, int new_x, int new_y
     if (grid[new_index] == nullptr) {
         
         grid[new_index] = agent;
-        grid[old_index] = nullptr; // Clear the old square
+        grid[old_index] = nullptr; //clear old square
         
         agent->move(new_x, new_y); 
         
@@ -62,16 +62,15 @@ std::vector<Agent*> Lattice::getNeighbors(int x, int y) const {
             int check_x = x + dx;
             int check_y = y + dy;
 
-            //ensure we don't look outside the map - using hard boundaries
-            if (check_x >= 0 && check_x < width_ && check_y >= 0 && check_y < height_) {
+            int wrap_x = (check_x + width_) % width_;
+            int wrap_y = (check_y + height_) % height_;
 
-                    int check_index = (check_y * width_) + check_x;
-
-                    if (grid[check_index] != nullptr) {
-                        neighbors.push_back(grid[check_index]);
-                    }
-                }
+            int check_index = (wrap_y * width_) + wrap_x;
+            
+            if (grid[check_index] != nullptr) {
+                neighbors.push_back(grid[check_index]);
             }
         }
+    }
     return neighbors;
 }

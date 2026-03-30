@@ -84,13 +84,13 @@ void MCsim::step() {
 
         int old_x = agent.getX();
         int old_y = agent.getY();
-        int new_x = old_x + dx;
-        int new_y = old_y + dy;
 
-        //check boundaries (this is hard wall, can add a periodic boundary feature branch later)
-        if (new_x >= 0 && new_x < lattice.getWidth() && new_y >= 0 && new_y < lattice.getHeight()) {
-            lattice.moveAgent(&agent, old_x, old_y, new_x, new_y);
-        }
+        //periodic boundaries
+        int new_x = (old_x + dx + lattice.getWidth()) % lattice.getWidth();
+        int new_y = (old_y + dy + lattice.getHeight()) % lattice.getHeight();
+
+        lattice.moveAgent(&agent, old_x, old_y, new_x, new_y);
+
 
         if (agent.getState() == InfectionState::EXPOSED) {
             if (dist_prob(rng) < sigma) {
