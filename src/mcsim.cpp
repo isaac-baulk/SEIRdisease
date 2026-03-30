@@ -1,10 +1,12 @@
 #include "../include/mcsim.h"
 #include <iostream>
 
+//initialise simulation
 MCsim::MCsim(int grid_w, int grid_h, double b, double s, double g)
     : lattice(grid_w, grid_h), beta(b), sigma(s), gamma(g), rng(std::random_device{}())
 {}
 
+//method to keep track of the states of all agents for all steps
 void MCsim::recordStats() {
     int current_S = 0;
     int current_E = 0;
@@ -21,6 +23,7 @@ void MCsim::recordStats() {
         }
     }
 
+    //update vectors
     history_S.push_back(current_S);
     history_E.push_back(current_E);
     history_I.push_back(current_I);
@@ -29,13 +32,13 @@ void MCsim::recordStats() {
 
 void MCsim::populate_agents(double p_sus, double p_exp, int pop_size) {
 
-    //check pop isnt too big
+    //check pop isnt too big for lattice
     int max_capacity = lattice.getWidth() * lattice.getHeight();
     if (pop_size > max_capacity) {
         throw std::runtime_error("Population size exceeds lattice capacity!");
     }
 
-    population.reserve(pop_size);
+    population.reserve(pop_size); //allocate memory space for population vector
 
     //set up distributions
     std::uniform_int_distribution<int> dist_x(0, lattice.getWidth() - 1);
@@ -45,7 +48,7 @@ void MCsim::populate_agents(double p_sus, double p_exp, int pop_size) {
     //make pop
     for (int i = 0; i < pop_size; ++i) {
         
-        //find empty coord using do/while loop
+        //find empty cell using do/while loop
         int random_x, random_y;
         do {
             random_x = dist_x(rng);
@@ -63,10 +66,11 @@ void MCsim::populate_agents(double p_sus, double p_exp, int pop_size) {
             new_agent.expose();
         } 
 
+        //add this agent to the population and place on the grid
         population.push_back(new_agent);
         lattice.placeAgent(&population.back(), random_x, random_y);
     }
-    recordStats();
+    recordStats(); //update history
 }
 
 void MCsim::step() {
@@ -75,6 +79,7 @@ void MCsim::step() {
     std::uniform_int_distribution<int> dist_dir(-1, 1);
     std::uniform_real_distribution<double> dist_prob(0.0, 1.0);
 
+    //generate random amounts for agents to move by
     for (auto& agent : population) {
         int dx, dy;
         do {
@@ -82,16 +87,18 @@ void MCsim::step() {
             dy = dist_dir(rng);
         } while (dx == 0 && dy == 0); //make sure not zero 
 
+        //get new and old positions
         int old_x = agent.getX();
         int old_y = agent.getY();
         int new_x = old_x + dx;
         int new_y = old_y + dy;
 
-        //check boundaries (this is hard wall, can add a periodic boundary feature branch later)
+        //check boundaries (this is using hard wall boundaries, so a move is only allowed if it doesn't exceed walls)
         if (new_x >= 0 && new_x < lattice.getWidth() && new_y >= 0 && new_y < lattice.getHeight()) {
             lattice.moveAgent(&agent, old_x, old_y, new_x, new_y);
         }
 
+        //update state of agent based on current state and probability
         if (agent.getState() == InfectionState::EXPOSED) {
             if (dist_prob(rng) < sigma) {
                 agent.infect();
@@ -109,9 +116,9 @@ void MCsim::step() {
             std::vector<Agent*> neighbors = lattice.getNeighbors(agent.getX(), agent.getY());
             
             for (Agent* neighbor : neighbors) {
-                if (neighbor->getState() == InfectionState::INFECTIOUS) {
+                if (neighbor->getState() == InfectionState::INFECTIOUS) { //each infected neighbor is a chance for infection
                     
-                    //check prob against beta
+                    //check probability against beta
                     if (dist_prob(rng) < beta) {
                         agent.expose();
                         break;

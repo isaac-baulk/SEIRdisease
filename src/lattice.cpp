@@ -2,7 +2,7 @@
 #include "../include/agent.h"
 #include <vector>
 
-//constructor
+//initialise lattice
 Lattice::Lattice(int width, int height): width_(width), height_(height){
     grid.resize(width * height, nullptr);
 }
@@ -12,11 +12,12 @@ int Lattice::getIndex(int x, int y) const {
     return (y * width_) + x;
 }
 
-//should implement this helper in moveAgent later
+//method to check if grid cell is empty
 bool Lattice::isOccupied(int x, int y) const {
     return grid[getIndex(x, y)] != nullptr;
 }
 
+//getters
 int Lattice::getWidth() {
     return width_;
 }
@@ -37,6 +38,7 @@ bool Lattice::moveAgent(Agent* agent, int old_x, int old_y, int new_x, int new_y
     int new_index = getIndex(new_x, new_y);
     int old_index = getIndex(old_x, old_y);
 
+    //only move agent if target cell is empty
     if (grid[new_index] == nullptr) {
         
         grid[new_index] = agent;
@@ -57,7 +59,7 @@ std::vector<Agent*> Lattice::getNeighbors(int x, int y) const {
     //loop through nearest neighbors
     for (int dx = -1; dx <= 1; dx++) {
         for (int dy = -1; dy <= 1; dy++) {
-            if (dx == 0 && dy == 0) continue;
+            if (dx == 0 && dy == 0) continue; //don't check the cell itself
 
             int check_x = x + dx;
             int check_y = y + dy;
@@ -66,7 +68,7 @@ std::vector<Agent*> Lattice::getNeighbors(int x, int y) const {
             if (check_x >= 0 && check_x < width_ && check_y >= 0 && check_y < height_) {
 
                     int check_index = (check_y * width_) + check_x;
-
+                    //if cell is not empty, add this neighbor to the list
                     if (grid[check_index] != nullptr) {
                         neighbors.push_back(grid[check_index]);
                     }

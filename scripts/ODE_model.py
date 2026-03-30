@@ -26,15 +26,16 @@ class odeSEIR:
         return [dSdt, dEdt, dIdt, dRdt]
 
     def solve(self, days, E0, I0, R0=0):
-        S0 = self.N - E0 - I0 - R0
-        y0 = [S0, E0, I0, R0]
+        S0 = self.N - E0 - I0 - R0 #number of susceptible agents
+        y0 = [S0, E0, I0, R0] #number of agents in each state
         
         t_span = (0, days)
-        t_eval = np.linspace(0, days, days)
+        t_eval = np.linspace(0, days, days) #timestep array
         
+        #use Runge-Kutta-Fehlberg method to solve ODEs
         solution = solve_ivp(self._derivatives, t_span, y0, t_eval=t_eval, method='RK45')
         
-        #store data
+        #store results
         self.t = solution.t
         self.S = solution.y[0]
         self.E = solution.y[1]

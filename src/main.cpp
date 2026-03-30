@@ -12,15 +12,18 @@ int main(){
     double s = 0.1;
     double g = 0.005;
 
+    //generate simulation
     MCsim MCsim(grid_w, grid_h, b, s, g);
 
+    //populate grid
     MCsim.populate_agents(0.95, 0.05, 1000);
 
+    //complete 100 monte carlo steps
     for (int i = 0; i < 100; i++) {
         MCsim.step();
     };
 
-    MCsim.printHistory();
+    MCsim.printHistory(); //output population history
     
     return 0;
 }

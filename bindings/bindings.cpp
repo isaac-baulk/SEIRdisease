@@ -7,12 +7,13 @@ namespace py = pybind11;
 PYBIND11_MODULE(seir_sim, m) {
     m.doc() = "C++ SEIR Monte Carlo Simulation Engine";
 
-    py::class_<MCsim>(m, "MCsim")
+    py::class_<MCsim>(m, "MCsim") //the class to use in python
 
-        .def(py::init<int, int, double, double, double>(), 
+        .def(py::init<int, int, double, double, double>(), //the parameters for initialisation
              py::arg("grid_width"), py::arg("grid_height"), 
              py::arg("beta"), py::arg("sigma"), py::arg("gamma"))
         
+     //other methods to implement
         .def("populate_agents", &MCsim::populate_agents,
              py::arg("prob_susceptible"), py::arg("prob_exposed"),
              py::arg("pop_size"))
