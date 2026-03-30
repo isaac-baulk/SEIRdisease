@@ -49,13 +49,13 @@ def track_agents(grid_size):
         3: 'green'
     }
     
-    ani = animation.FuncAnimation(fig, update, frames=300, interval=50, fargs=[ax, scatter, color_map])
+    ani = animation.FuncAnimation(fig, update, frames=300, interval=500, fargs=[ax, scatter, color_map])
 
     plt.show()
 
 
 grid_size = 100
 sim = seir_sim.MCsim(grid_size, grid_size, 1, 0.1, 0.005)
-sim.populate_agents(0.95, 0.05, 2000)
+sim.populate_agents(0.95, 0.05, 1000)
 
 track_agents(grid_size)
