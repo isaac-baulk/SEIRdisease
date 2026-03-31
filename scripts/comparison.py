@@ -3,14 +3,15 @@ import seir_sim
 from ODE_model import odeSEIR
 
 # sim parameters --------------------------------------------------------------------------------------
-N = 30
-beta = 0.15
+N = 1000
+beta = 0.4
 sigma = 1
 gamma = 0.1
 days = 30
 
-prop_exposed = 0.1
-prop_susceptible = 1.0 - prop_exposed
+prop_exposed = 0.05
+prop_infected = 0.01
+prop_susceptible = 1.0 - prop_exposed - prop_infected
 
 #convert parameters from ODE model to suitable equivalents for mcsim model
 steps_per_day = 20
@@ -25,7 +26,7 @@ beta_mc = beta / (k*steps_per_day) #beta accounts for number of contacts that ag
 
 # MONTE CARLO METHOD --------------------------------------------------------------------------------------
 mc_sim = seir_sim.MCsim(grid_size, grid_size, beta_mc, p_sigma, p_gamma)
-mc_sim.populate_agents(prop_susceptible, prop_exposed, N)
+mc_sim.populate_agents(prop_susceptible, prop_exposed, prop_infected, N)
 
 num_steps = steps_per_day * days
 for _ in range(num_steps):
@@ -33,9 +34,10 @@ for _ in range(num_steps):
 
 # ODE METHOD --------------------------------------------------------------------------------------
 initial_exposed = prop_exposed * N
+initial_infected = prop_infected * N
 
 ode_sim = odeSEIR(N, beta, sigma, gamma)
-ode_sim.solve(days, E0=initial_exposed, I0=1)
+ode_sim.solve(days, E0=initial_exposed, I0=initial_infected)
 
 # PLOT AND COMPARE --------------------------------------------------------------------------------------
 R_factor = beta / gamma
