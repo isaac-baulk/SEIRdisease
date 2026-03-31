@@ -40,6 +40,12 @@ void Agent::recover() {
     }
 }
 
+//force setting of agent state (used in populateAgents)
+void Agent::setState(InfectionState new_state) {
+    current_state = new_state;
+    steps_in_state = 0;
+}
+
 //set agent position to new position 
 void Agent::move(int newx, int newy) {
     x = newx;

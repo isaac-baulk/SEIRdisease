@@ -30,7 +30,7 @@ void MCsim::recordStats() {
     history_R.push_back(current_R);
 }
 
-void MCsim::populate_agents(double p_sus, double p_exp, int pop_size) {
+void MCsim::populate_agents(double p_sus, double p_exp, double p_inf, int pop_size) {
 
     //check pop isnt too big for lattice
     int max_capacity = lattice.getWidth() * lattice.getHeight();
@@ -61,10 +61,13 @@ void MCsim::populate_agents(double p_sus, double p_exp, int pop_size) {
         //assign state
         double p = dist_prob(rng);
         
-        //only need to update exposed cause susceptible is default state
+        //only need to update exposed and infected cause susceptible is default state
         if (p < p_exp) {
-            new_agent.expose();
-        } 
+            new_agent.setState(InfectionState::EXPOSED);
+        }  
+        else if (p < (p_exp + p_inf)) {
+            new_agent.setState(InfectionState::INFECTIOUS);
+        }
 
         //add this agent to the population and place on the grid
         population.push_back(new_agent);
@@ -118,7 +121,7 @@ void MCsim::step() {
             for (Agent* neighbor : neighbors) {
                 if (neighbor->getState() == InfectionState::INFECTIOUS) { //each infected neighbor is a chance for infection
                     
-                    //check probability against beta
+                    //check probability against beta (which is probability of transmission per contact)
                     if (dist_prob(rng) < beta) {
                         agent.expose();
                         break;

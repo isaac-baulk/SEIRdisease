@@ -27,6 +27,9 @@ class Agent {
         void recover();
         void move(int newx, int newy);
         void incrementStep();
+
+        //setter to force state
+        void setState(InfectionState new_state);
 };
 
 #endif

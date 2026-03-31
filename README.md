@@ -66,6 +66,14 @@ To render a a scatter plot animation of the agents moving across the lattice:
 cd scripts
 python3 follow_agents.py
 ```
+### 3. Diamond Princess Test Case
+To test the two models against a historical disease outbreak:
+
+```bash
+cd scripts
+python3 diamondprincess.py
+```
+This script uses data from the COVID-19 outbreak on the Diamond Princess cruise ship in 2020 to compare the two SEIR models against real data for disease transmission.
 
 ### Optional: Use Monte Carlo Model in C++ 
 `src/main.cpp` gives an example use of the monte carlo model in C++. To compile:
