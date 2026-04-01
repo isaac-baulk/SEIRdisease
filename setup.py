@@ -1,23 +1,24 @@
-from setuptools import setup
-from pybind11.setup_helpers import Pybind11Extension, build_ext
+from setuptools import setup, Extension
+import pybind11
 
 ext_modules = [
-    Pybind11Extension(
+    Extension(
         "seir_sim",      
         [
             "bindings/bindings.cpp", 
-            "src/Agent.cpp", 
-            "src/Lattice.cpp", 
+            "src/agent.cpp", 
+            "src/lattice.cpp", 
             "src/mcsim.cpp"
         ],
 
-        include_dirs=["include"],
-        cxx_std=17,
+        include_dirs=[pybind11.get_include(), 'include'],
+        language='c++',
+        extra_compile_args=['-std=c++17', '-O3']
     ),
 ]
 
 setup(
-    name="seir_sim",
+    name='seir_project',
+    version='1.0',
     ext_modules=ext_modules,
-    cmdclass={"build_ext": build_ext},
 )

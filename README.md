@@ -43,15 +43,14 @@ To compile and run this project, you will need:
 This project uses `setup.py` to handle the compilation of the C++ program automatically.
 
 1. Clone this repository and navigate to the root directory.
-2. Run the build command:
+2. Install the bound C++ module using pip:
    ```bash
-   python3 setup.py build_ext --inplace
+   pip install -e .
    ```
-3. The compiler will generate a module file in the root directory with the extension `.so`. This must be moved into the `scripts/` directory so the Python scripts can import it.
 
 ## Usage
 
-Once compiled, navigate to the `scripts/` directory to run the visualizations.
+Once installed, navigate to the `scripts/` directory to run the visualizations.
 
 ### 1. Compare Models
 To run both the monte carlo and ODE simulations and compare their results:

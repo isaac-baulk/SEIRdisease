@@ -27,7 +27,7 @@ int Lattice::getHeight() {
 }
 
 //initially place agents
-void Lattice::placeAgent(Agent* agent, int x, int y) { //should merge with moveAgent
+void Lattice::placeAgent(Agent* agent, int x, int y) { 
     int index = getIndex(x, y);
     grid[index] = agent;   
     agent->move(x, y);
@@ -42,7 +42,7 @@ bool Lattice::moveAgent(Agent* agent, int old_x, int old_y, int new_x, int new_y
     if (grid[new_index] == nullptr) {
         
         grid[new_index] = agent;
-        grid[old_index] = nullptr; // Clear the old square
+        grid[old_index] = nullptr; //clear the old square
         
         agent->move(new_x, new_y); 
         
