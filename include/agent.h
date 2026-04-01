@@ -9,7 +9,6 @@ class Agent {
         InfectionState current_state; 
         int x;
         int y;
-        int steps_in_state;
 
     public:
         //init
@@ -19,14 +18,12 @@ class Agent {
         InfectionState getState() const;
         int getX() const;
         int getY() const;
-        int getStepsInState() const;
         
         //behaviours
         void expose();
         void infect();
         void recover();
         void move(int newx, int newy);
-        void incrementStep();
 
         //setter to force state
         void setState(InfectionState new_state);

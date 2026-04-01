@@ -22,37 +22,28 @@ int Agent::getY() const {
 void Agent::expose() {
     if (current_state == InfectionState::SUSCEPTIBLE) {
         current_state = InfectionState::EXPOSED;
-        steps_in_state = 0;
     }
 }
  
 void Agent::infect() {
     if (current_state == InfectionState::EXPOSED) {
         current_state = InfectionState::INFECTIOUS;
-        steps_in_state = 0;
     }
 }
 
 void Agent::recover() {
     if (current_state == InfectionState::INFECTIOUS) {
         current_state = InfectionState::RECOVERED;
-        steps_in_state = 0;
     }
 }
 
 //force setting of agent state (used in populateAgents)
 void Agent::setState(InfectionState new_state) {
     current_state = new_state;
-    steps_in_state = 0;
 }
 
 //set agent position to new position 
 void Agent::move(int newx, int newy) {
     x = newx;
     y = newy;
-}
-
-//update timestep
-void Agent::incrementStep() {
-    steps_in_state++;
 }

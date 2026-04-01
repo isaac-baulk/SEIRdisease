@@ -129,8 +129,6 @@ void MCsim::step() {
                 }
             }
         }
-
-        agent.incrementStep();
     }
     recordStats();
 }
