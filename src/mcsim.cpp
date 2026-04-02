@@ -115,11 +115,11 @@ void MCsim::step() {
         }
 
         if (agent.getState() == InfectionState::SUSCEPTIBLE) {
-            //check neighbors
-            std::vector<Agent*> neighbors = lattice.getNeighbors(agent.getX(), agent.getY());
+            //check neighbours
+            std::vector<Agent*> neighbours = lattice.getNeighbours(agent.getX(), agent.getY());
             
-            for (Agent* neighbor : neighbors) {
-                if (neighbor->getState() == InfectionState::INFECTIOUS) { //each infected neighbor is a chance for infection
+            for (Agent* neighbour : neighbours) {
+                if (neighbour->getState() == InfectionState::INFECTIOUS) { //each infected neighbour is a chance for infection
                     
                     //check probability against beta (which is probability of transmission per contact)
                     if (dist_prob(rng) < beta) {

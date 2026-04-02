@@ -3,14 +3,14 @@ import seir_sim
 from ODE_model import odeSEIR
 
 # sim parameters --------------------------------------------------------------------------------------
-N = 1000
-beta = 0.4
+N = 10
+beta = 0.1
 sigma = 1
-gamma = 0.1
+gamma = 0.2
 days = 30
 
-prop_exposed = 0.05
-prop_infected = 0.01
+prop_exposed = 0.1
+prop_infected = 0.3
 prop_susceptible = 1.0 - prop_exposed - prop_infected
 
 #convert parameters from ODE model to suitable equivalents for mcsim model
@@ -40,8 +40,8 @@ ode_sim = odeSEIR(N, beta, sigma, gamma)
 ode_sim.solve(days, E0=initial_exposed, I0=initial_infected)
 
 # PLOT AND COMPARE --------------------------------------------------------------------------------------
-R_factor = beta / gamma
-print(f'R factor for this epidemic: {R_factor}')
+#R_factor = beta / gamma
+#print(f'R factor for this epidemic: {R_factor}')
 
 plt.figure(figsize=(10, 6))
 

@@ -8,7 +8,7 @@ class Lattice {
     public:
         Lattice(int width, int height);
         void placeAgent(Agent* agent, int x, int y); //need to count agents in population when placing
-        std::vector<Agent*> getNeighbors(int x, int y) const;
+        std::vector<Agent*> getNeighbours(int x, int y) const;
         bool isOccupied(int x, int y) const;
         bool moveAgent(Agent* agent, int old_x, int old_y, int new_x, int new_y);
 

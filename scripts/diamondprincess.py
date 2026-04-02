@@ -9,9 +9,9 @@ historical_cumulative = [10, 20, 61, 64, 70, 135, 174, 174, 218, 218, 285, 355, 
 
 #simulation params --------------------------------------------------------------------------------------
 N = 3711
-beta = 0.38 #from Rocklöv, J., et al. (February 2020). Journal of Travel Medicine, 27(3).
+beta = 0.44 #from Rocklöv, J., et al. (February 2020). Journal of Travel Medicine, 27(3).
 sigma = 0.19 #from Li, Q., et al. (January 2020). The New England Journal of Medicine (NEJM).
-gamma = 0.10 #from Rocklöv, J., et al.
+gamma = 0.1 #from Rocklöv, J., et al.
 days = 15
 
 prop_exposed = 0.0269 #100 people initially exposed)
@@ -19,8 +19,8 @@ prop_infected = 0.00269 #10 initially infected
 prop_susceptible = 1.0 - prop_exposed - prop_infected
 
 #convert parameters from ODE model to suitable equivalents for mcsim model -----------------------------
-steps_per_day = 24 #one step per hour
-grid_size = 61
+steps_per_day = 100 #one step per hour
+grid_size = 393 #393
 
 p_gamma = gamma / steps_per_day #convert gamma to a probability for mcsim
 p_sigma = sigma / steps_per_day #convert sigma to a probability for mcsim
@@ -29,14 +29,6 @@ pop_density = N/(grid_size*grid_size)
 k = 8 * pop_density #avg number of nearest neighbours is 8 neighbours * population density
 
 beta_mc = beta / (k*steps_per_day) #beta accounts for number of contacts that agents make per day
-
-#artifically increase beta to mitigate effects of grid size ---------------------------------
-grid_area = grid_size * grid_size  
-actual_density = N / grid_area 
-target_density = 0.95 
-
-crowding_factor = target_density / actual_density
-beta_mc = beta_mc * crowding_factor
 
 # MONTE CARLO METHOD --------------------------------------------------------------------------------------
 mc_sim = seir_sim.MCsim(grid_size, grid_size, beta_mc, p_sigma, p_gamma)
