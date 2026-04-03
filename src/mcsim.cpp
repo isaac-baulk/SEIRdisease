@@ -178,7 +178,7 @@ void MCsim::printHistory() const {
     std::cout << "Step\tS\tE\tI\tR\n";
     std::cout << "------------------------------------\n";
 
-    for (size_t i = 0; i < history_S.size(); i += 5) {
+    for (size_t i = 0; i < history_S.size(); i += 5) { //only print every 5th step
         std::cout << i << "\t"
                   << history_S[i] << "\t"
                   << history_E[i] << "\t"
