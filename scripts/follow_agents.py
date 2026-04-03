@@ -55,20 +55,20 @@ def track_agents(grid_size):
         3: 'green'
     }
     
-    ani = animation.FuncAnimation(fig, update, frames=500, interval=30, fargs=[ax, scatter, color_map])
+    ani = animation.FuncAnimation(fig, update, frames=300, interval=500, fargs=[ax, scatter, color_map])
 
     plt.show()
 
 
 #set parameters ----------------------------------------------------------------
 grid_size = 100
-beta = 0.4
-sigma = 1
-gamma = 0.1
+N = 1000
+beta = 1
+sigma = 0.1
+gamma = 0.005
 prop_sus = 0.94
 prop_exp = 0.05
 prop_inf = 0.01
-N = 8000
 
 pop_density = N/(grid_size*grid_size)
 k = 8 * pop_density #avg number of nearest neighbours is 8 neighbours * population density
