@@ -12,6 +12,7 @@ N = 3711
 beta = 0.44 #from Rocklöv, J., et al. (February 2020). Journal of Travel Medicine, 27(3).
 sigma = 0.19 #from Li, Q., et al. (January 2020). The New England Journal of Medicine (NEJM).
 gamma = 0.1 #from Rocklöv, J., et al.
+reinfect = 0.0
 days = 15
 
 prop_exposed = 0.0269 #100 people initially exposed)
@@ -31,7 +32,7 @@ k = 8 * pop_density #avg number of nearest neighbours is 8 neighbours * populati
 beta_mc = beta / (k*steps_per_day) #beta accounts for number of contacts that agents make per day
 
 # MONTE CARLO METHOD --------------------------------------------------------------------------------------
-mc_sim = seir_sim.MCsim(grid_size, grid_size, beta_mc, p_sigma, p_gamma)
+mc_sim = seir_sim.MCsim(grid_size, grid_size, beta_mc, p_sigma, p_gamma, reinfect)
 mc_sim.populate_agents(prop_susceptible, prop_exposed, prop_infected, N)
 
 num_steps = steps_per_day * days

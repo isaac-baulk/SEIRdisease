@@ -3,10 +3,11 @@ import seir_sim
 from ODE_model import odeSEIR
 
 # sim parameters --------------------------------------------------------------------------------------
-N = 10
+N = 1000
 beta = 0.1
 sigma = 1
 gamma = 0.2
+reinfect = 0.0
 days = 30
 
 prop_exposed = 0.1
@@ -25,7 +26,7 @@ k = 8 * pop_density #avg number of nearest neighbours is 8 neighbours * populati
 beta_mc = beta / (k*steps_per_day) #beta accounts for number of contacts that agents make per day
 
 # MONTE CARLO METHOD --------------------------------------------------------------------------------------
-mc_sim = seir_sim.MCsim(grid_size, grid_size, beta_mc, p_sigma, p_gamma)
+mc_sim = seir_sim.MCsim(grid_size, grid_size, beta_mc, p_sigma, p_gamma, reinfect)
 mc_sim.populate_agents(prop_susceptible, prop_exposed, prop_infected, N)
 
 num_steps = steps_per_day * days

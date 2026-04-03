@@ -4,7 +4,7 @@ import matplotlib.animation as animation
 import numpy as np
 
 def plot_populations(): 
-    for _ in range(500): #run simulation steps
+    for _ in range(200): #run simulation steps
         sim.step()
         data = sim.getAgentCoordinates()
 
@@ -55,7 +55,7 @@ def track_agents(grid_size):
         3: 'green'
     }
     
-    ani = animation.FuncAnimation(fig, update, frames=500, interval=30, fargs=[ax, scatter, color_map])
+    ani = animation.FuncAnimation(fig, update, frames=200, interval=30, fargs=[ax, scatter, color_map])
 
     plt.show()
 
@@ -65,6 +65,7 @@ grid_size = 100
 beta = 0.4
 sigma = 1
 gamma = 0.1
+reinfect = 0.6
 prop_sus = 0.94
 prop_exp = 0.05
 prop_inf = 0.01
@@ -75,7 +76,7 @@ k = 8 * pop_density #avg number of nearest neighbours is 8 neighbours * populati
 beta = beta / k #beta accounts for number of contacts that agents make per step
 
 #set up sim ----------------------------------------------------------------
-sim = seir_sim.MCsim(grid_size, grid_size, beta, sigma, gamma)
+sim = seir_sim.MCsim(grid_size, grid_size, beta, sigma, gamma, reinfect)
 sim.populate_agents(prop_sus, prop_exp, prop_inf, N)
 
 #create animation to track agents around the grid
