@@ -42,7 +42,11 @@ To compile and run this project, you will need:
 
 This project uses `setup.py` to handle the compilation of the C++ program automatically.
 
-1. Clone this repository and navigate to the root directory.
+1. Clone this repository
+ ```bash
+   git clone https://github.com/izzy-baulk/assesment2.git
+   ```
+2. Navigate to the root directory
 2. Install the bound C++ module using pip:
    ```bash
    pip install -e .
@@ -55,21 +59,18 @@ Once installed, navigate to the `scripts/` directory to run the visualizations.
 ### 1. Compare Models
 To run both the monte carlo and ODE simulations and compare their results:
 ```bash
-cd scripts
 python3 comparison.py
 ```
 
 ### 2. Track Agents on Lattice (using monte carlo model)
 To render a a scatter plot animation of the agents moving across the lattice:
 ```bash
-cd scripts
 python3 follow_agents.py
 ```
 ### 3. Diamond Princess Test Case
 To test the two models against a historical disease outbreak:
 
 ```bash
-cd scripts
 python3 diamondprincess.py
 ```
 This script uses data from the COVID-19 outbreak on the Diamond Princess cruise ship in 2020 to compare the two SEIR models against real data for disease transmission.
