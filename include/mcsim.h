@@ -12,6 +12,7 @@ class MCsim {
         double beta; 
         double sigma; 
         double gamma;
+        double reinfect;
 
         //tracking pop sizes
         std::vector<int> history_S;
@@ -25,7 +26,7 @@ class MCsim {
         std::uniform_real_distribution<double> dist{0.0, 1.0};
 
     public:
-        MCsim(int grid_w_, int grid_h_, double b, double s, double g);
+        MCsim(int grid_w_, int grid_h_, double b, double s, double g, double r);
         void step();
         void populate_agents(double p_sus, double p_exp, double p_inf, int pop_size);
         void printHistory() const;

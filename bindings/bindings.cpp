@@ -9,9 +9,9 @@ PYBIND11_MODULE(seir_sim, m) {
 
     py::class_<MCsim>(m, "MCsim") //the class to use in python
 
-        .def(py::init<int, int, double, double, double>(), //the parameters for initialisation
+        .def(py::init<int, int, double, double, double, double>(), //the parameters for initialisation
              py::arg("grid_width"), py::arg("grid_height"), 
-             py::arg("beta"), py::arg("sigma"), py::arg("gamma"))
+             py::arg("beta"), py::arg("sigma"), py::arg("gamma"), py::arg("reinfect"))
         
      //other methods to implement
         .def("populate_agents", &MCsim::populate_agents,

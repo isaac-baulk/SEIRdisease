@@ -2,8 +2,8 @@
 #include <iostream>
 
 //initialise simulation
-MCsim::MCsim(int grid_w, int grid_h, double b, double s, double g)
-    : lattice(grid_w, grid_h), beta(b), sigma(s), gamma(g), rng(std::random_device{}())
+MCsim::MCsim(int grid_w, int grid_h, double b, double s, double g, double r)
+    : lattice(grid_w, grid_h), beta(b), sigma(s), gamma(g), reinfect(r), rng(std::random_device{}())
 {}
 
 //method to keep track of the states of all agents for all steps
@@ -114,7 +114,13 @@ void MCsim::step() {
             }
         }
 
-        if (agent.getState() == InfectionState::SUSCEPTIBLE) {
+        else if (agent.getState() == InfectionState::RECOVERED) {
+            if (dist_prob(rng) < reinfect) {
+                agent.setState(InfectionState::SUSCEPTIBLE);
+            }
+        }
+
+        else if (agent.getState() == InfectionState::SUSCEPTIBLE) {
             //check neighbours
             std::vector<Agent*> neighbours = lattice.getNeighbours(agent.getX(), agent.getY());
             
@@ -172,7 +178,7 @@ void MCsim::printHistory() const {
     std::cout << "Step\tS\tE\tI\tR\n";
     std::cout << "------------------------------------\n";
 
-    for (size_t i = 0; i < history_S.size(); i += 5) {
+    for (size_t i = 0; i < history_S.size(); i += 5) { //only print every 5th step
         std::cout << i << "\t"
                   << history_S[i] << "\t"
                   << history_E[i] << "\t"
