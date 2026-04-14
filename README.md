@@ -1,4 +1,4 @@
-# Assesment 2 - The SEIR model for disease transmission
+# Assessment 2 - The SEIR model for disease transmission
 
 This implements the SEIR disease transmission model using two mathematical approaches: a **Stochastic Agent-Based Model (monte carlo)** built in C++ and a **Deterministic Compartmental Model (ODE)** built in Python. 
 
@@ -44,7 +44,7 @@ This project uses `setup.py` to handle the compilation of the C++ program automa
 
 1. Clone this repository
  ```bash
-   git clone https://github.com/izzy-baulk/assesment2.git
+   git clone https://github.com/izzy-baulk/assessment2.git
    ```
 2. Navigate to the root directory
 2. Install the bound C++ module using pip:
