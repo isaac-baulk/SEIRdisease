@@ -2,9 +2,10 @@ import seir_sim
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
+from validation_methods import get_inputs
 
-def plot_populations(): 
-    for _ in range(500): #run simulation steps
+def plot_populations(sim, simulation_steps): 
+    for _ in range(simulation_steps): #run simulation steps
         sim.step()
         data = sim.getAgentCoordinates()
 
@@ -20,7 +21,7 @@ def plot_populations():
     plt.legend()
     plt.show()
 
-def update(frame, ax, scatter, color_map):
+def update(frame, ax, scatter, color_map, sim):
     sim.step()
 
     #get all positions of all agents
@@ -41,7 +42,9 @@ def update(frame, ax, scatter, color_map):
     ax.set_title(f"seir model - step: {frame}")
     return scatter,
 
-def track_agents(grid_size):
+def track_agents(sim, grid_size, simulation_steps):
+
+    #initialise plot
     fig, ax = plt.subplots(figsize=(8, 8))
     ax.set_xlim(0, grid_size)
     ax.set_ylim(0, grid_size)
@@ -55,32 +58,33 @@ def track_agents(grid_size):
         3: 'green'
     }
     
-    ani = animation.FuncAnimation(fig, update, frames=300, interval=30, fargs=[ax, scatter, color_map])
+    #animation object
+    ani = animation.FuncAnimation(fig, update, frames=simulation_steps, interval=30, fargs=[ax, scatter, color_map, sim])
 
     plt.show()
+ 
+def main():
+    #get user inputs using validation function
+    param_results, N, beta_mc, grid_size, days = get_inputs()
 
+    #unpack results
+    simulation_steps = days * 20
+    sigma = param_results['sigma']
+    gamma = param_results['gamma']
+    reinfect = param_results['reinfect']
+    prop_exp = param_results['prop_exp']
+    prop_inf = param_results['prop_inf']
 
-#set parameters ----------------------------------------------------------------
-grid_size = 10
-N = 30
-beta = 1
-sigma = 0.1
-gamma = 0.01
-reinfect = 0.001
-prop_sus = 0.9
-prop_exp = 0.05
-prop_inf = 0.05
+    #set up sim ----------------------------------------------------------------
+    sim = seir_sim.MCsim(grid_size, grid_size, beta_mc, sigma, gamma, reinfect)
+    print('Simulating agents')
+    sim.populate_agents(prop_exp, prop_inf, N)
 
-pop_density = N/(grid_size*grid_size)
-k = 8 * pop_density #avg number of nearest neighbours is 8 neighbours * population density
-beta = beta / k #beta accounts for number of contacts that agents make per step
+    #create animation to track agents around the grid
+    track_agents(sim, grid_size, simulation_steps)
 
-#set up sim ----------------------------------------------------------------
-sim = seir_sim.MCsim(grid_size, grid_size, beta, sigma, gamma, reinfect)
-sim.populate_agents(prop_sus, prop_exp, prop_inf, N)
+    #plot poulation sizes
+    print('Plotting populations')
+    plot_populations(sim, simulation_steps)
 
-#create animation to track agents around the grid
-track_agents(grid_size)
-
-#uncomment to plot poulation sizes
-plot_populations()
+main()

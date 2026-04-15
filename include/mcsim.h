@@ -28,7 +28,7 @@ class MCsim {
     public:
         MCsim(int grid_w_, int grid_h_, double b, double s, double g, double r);
         void step();
-        void populate_agents(double p_sus, double p_exp, double p_inf, int pop_size);
+        void populate_agents(double p_exp, double p_inf, int pop_size);
         void printHistory() const;
         
         //will use these getters later for plotting

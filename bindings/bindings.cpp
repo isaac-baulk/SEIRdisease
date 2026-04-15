@@ -15,7 +15,7 @@ PYBIND11_MODULE(seir_sim, m) {
         
      //other methods to implement
         .def("populate_agents", &MCsim::populate_agents,
-             py::arg("prob_susceptible"), py::arg("prob_exposed"), py::arg("prob_infectious"),
+             py::arg("prob_exposed"), py::arg("prob_infectious"),
              py::arg("pop_size"))
         
         .def("step", &MCsim::step)

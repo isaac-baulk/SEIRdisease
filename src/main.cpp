@@ -17,7 +17,7 @@ int main(){
     MCsim MCsim(grid_w, grid_h, b, s, g, r);
 
     //populate grid
-    MCsim.populate_agents(0.94, 0.05, 0.01, 1000);
+    MCsim.populate_agents(0.05, 0.01, 1000);
 
     //complete 100 monte carlo steps
     for (int i = 0; i < 100; i++) {

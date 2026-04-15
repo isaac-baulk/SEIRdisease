@@ -17,11 +17,10 @@ days = 15
 
 prop_exposed = 0.0269 #100 people initially exposed)
 prop_infected = 0.00269 #10 initially infected
-prop_susceptible = 1.0 - prop_exposed - prop_infected
 
 #convert parameters from ODE model to suitable equivalents for mcsim model -----------------------------
-steps_per_day = 100 #one step per hour
-grid_size = 393 #393
+steps_per_day = 24 #one step per hour
+grid_size = 393 
 
 p_gamma = gamma / steps_per_day #convert gamma to a probability for mcsim
 p_sigma = sigma / steps_per_day #convert sigma to a probability for mcsim
@@ -33,7 +32,7 @@ beta_mc = beta / (k*steps_per_day) #beta accounts for number of contacts that ag
 
 # MONTE CARLO METHOD --------------------------------------------------------------------------------------
 mc_sim = seir_sim.MCsim(grid_size, grid_size, beta_mc, p_sigma, p_gamma, reinfect)
-mc_sim.populate_agents(prop_susceptible, prop_exposed, prop_infected, N)
+mc_sim.populate_agents(prop_exposed, prop_infected, N)
 
 num_steps = steps_per_day * days
 for _ in range(num_steps):

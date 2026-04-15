@@ -30,7 +30,7 @@ void MCsim::recordStats() {
     history_R.push_back(current_R);
 }
 
-void MCsim::populate_agents(double p_sus, double p_exp, double p_inf, int pop_size) {
+void MCsim::populate_agents(double p_exp, double p_inf, int pop_size) {
 
     //check pop isnt too big for lattice
     int max_capacity = lattice.getWidth() * lattice.getHeight();
@@ -156,10 +156,11 @@ std::vector<int> MCsim::getHistoryR() const {
     return history_R;
 }
 
+//method to extract agent coords for use in Python
 std::vector<std::vector<int>> MCsim::getAgentCoordinates() const {
     
     std::vector<std::vector<int>> agent_data;
-    agent_data.reserve(population.size()); 
+    agent_data.reserve(population.size()); //reserve memory for population
 
     for (const auto& agent : population) {
         

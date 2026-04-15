@@ -16,7 +16,9 @@ seir_project/
 │   └── mcsim.h
 ├── scripts/                 # python scripts
 │   ├── ODE_model.py 
-│   ├── comparison.py    
+│   ├── comparison.py
+│   ├── validation_methods.py
+│   ├── diamondprincess.py    
 │   └── follow_agents.py      
 ├── src/                     # C++ Source files
 │   ├── agent.cpp
