@@ -46,7 +46,7 @@ This project uses `setup.py` to handle the compilation of the C++ program automa
 
 1. Clone this repository
  ```bash
-   git clone https://github.com/izzy-baulk/assessment2.git
+   git clone https://github.com/isaac-baulk/assessment2.git
    ```
 2. Navigate to the root directory
 2. Install the bound C++ module using pip:
