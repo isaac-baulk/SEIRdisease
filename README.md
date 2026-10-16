@@ -1,4 +1,4 @@
-# Assessment 2 - The SEIR model for disease transmission
+# The SEIR model for disease transmission
 
 This implements the SEIR disease transmission model using two mathematical approaches: a **Stochastic Agent-Based Model (monte carlo)** built in C++ and a **Deterministic Compartmental Model (ODE)** built in Python. 
 
